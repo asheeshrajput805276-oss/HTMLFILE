@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Household Services App Prototype</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f0f2f5;
+  }
+
+  header {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #e65b50;
+  }
+
+  .service-card {
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .service-info {
+    max-width: 70%;
+  }
+
+  .service-info h3 {
+    margin: 0 0 5px 0;
+    color: #ff6f61;
+  }
+
+  .service-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Household Services</h1>
+</header>
+
+<div class="container">
+  <h2>Find a Service</h2>
+  <!-- Location and Service Selection -->
+  <input type="text" placeholder="Enter your location" id="location">
+  <select id="service">
+    <option value="">Select Service</option>
+    <option value="plumbing">Plumbing</option>
+    <option value="electrical">Electrical</option>
+    <option value="electronic">Electronic Repair</option>
+    <option value="mechanical">Mechanical</option>
+    <option value="pest">Pest Control</option>
+    <option value="painting">Home Paint</option>
+    <option value="machine">Machine Repair</option>
+  </select>
+  <button onclick="searchService()">Search</button>
+
+  <h2>Available Providers</h2>
+  <div id="providers">
+    <!-- Example Service Provider Cards -->
+    <div class="service-card">
+      <div class="service-info">
+        <h3>John's Plumbing</h3>
+        <p>4.5⭐ | 2 km away | Plumbing</p>
+      </div>
+      <button onclick="scheduleService('John\'s Plumbing')">Schedule</button>
+    </div>
+    <div class="service-card">
+      <div class="service-info">
+        <h3>ElectricFix</h3>
+        <p>4.7⭐ | 1.5 km away | Electrical</p>
+      </div>
+      <button onclick="scheduleService('ElectricFix')">Schedule</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function searchService() {
+  const location = document.getElementById('location').value;
+  const service = document.getElementById('service').value;
+
+  if(!location || !service) {
+    alert('Please enter location and select a service!');
+    return;
+  }
+
+  alert(`Searching for ${service} services near ${location}...`);
+}
+
+function scheduleService(providerName) {
