@@ -10,28 +10,24 @@
     margin: 0;
     background: #f0f2f5;
   }
-
   header {
     background-color: #ff6f61;
     color: #fff;
     padding: 20px;
     text-align: center;
   }
-
   .container {
-    max-width: 500px;
+    max-width: 600px;
     margin: 20px auto;
     background: #fff;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   }
-
   h2 {
     text-align: center;
     color: #333;
   }
-
   input, select, button {
     width: 100%;
     padding: 12px;
@@ -41,39 +37,28 @@
     box-sizing: border-box;
     font-size: 16px;
   }
-
   button {
     background-color: #ff6f61;
     color: white;
     border: none;
     cursor: pointer;
   }
-
   button:hover {
     background-color: #e65b50;
   }
-
   .service-card {
     border: 1px solid #ddd;
     padding: 12px;
     border-radius: 8px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 15px;
+    background: #fafafa;
   }
-
-  .service-info {
-    max-width: 70%;
-  }
-
   .service-info h3 {
     margin: 0 0 5px 0;
     color: #ff6f61;
   }
-
   .service-info p {
-    margin: 0;
+    margin: 3px 0;
     font-size: 14px;
     color: #555;
   }
@@ -102,36 +87,109 @@
   <button onclick="searchService()">Search</button>
 
   <h2>Available Providers</h2>
-  <div id="providers">
-    <!-- Example Service Provider Cards -->
-    <div class="service-card">
-      <div class="service-info">
-        <h3>John's Plumbing</h3>
-        <p>4.5⭐ | 2 km away | Plumbing</p>
-      </div>
-      <button onclick="scheduleService('John\'s Plumbing')">Schedule</button>
-    </div>
-    <div class="service-card">
-      <div class="service-info">
-        <h3>ElectricFix</h3>
-        <p>4.7⭐ | 1.5 km away | Electrical</p>
-      </div>
-      <button onclick="scheduleService('ElectricFix')">Schedule</button>
-    </div>
-  </div>
+  <div id="providers"></div>
 </div>
 
 <script>
+// Example provider data with detailed info
+const providersData = [
+  {
+    name: "John's Plumbing",
+    rating: 4.5,
+    distance: "2 km",
+    service: "plumbing",
+    phone: "9876543210",
+    email: "john.plumbing@example.com",
+    experience: "8 years",
+    price: "₹500 - ₹1500",
+    skills: "Leak fixing, pipe installation, bathroom fittings"
+  },
+  {
+    name: "ElectricFix",
+    rating: 4.7,
+    distance: "1.5 km",
+    service: "electrical",
+    phone: "9123456780",
+    email: "electricfix@example.com",
+    experience: "5 years",
+    price: "₹400 - ₹1200",
+    skills: "Wiring, appliance repair, circuit troubleshooting"
+  },
+  {
+    name: "PaintPro",
+    rating: 4.6,
+    distance: "3 km",
+    service: "painting",
+    phone: "9988776655",
+    email: "paintpro@example.com",
+    experience: "10 years",
+    price: "₹2000 - ₹5000",
+    skills: "Interior painting, exterior painting, wall textures"
+  },
+  {
+    name: "PestAway",
+    rating: 4.8,
+    distance: "2.5 km",
+    service: "pest",
+    phone: "9112233445",
+    email: "pestaway@example.com",
+    experience: "6 years",
+    price: "₹1000 - ₹3000",
+    skills: "Termite control, rodent removal, fumigation"
+  }
+];
+
 function searchService() {
   const location = document.getElementById('location').value;
   const service = document.getElementById('service').value;
+  const providersDiv = document.getElementById('providers');
+  providersDiv.innerHTML = "";
 
   if(!location || !service) {
     alert('Please enter location and select a service!');
     return;
   }
 
-  alert(`Searching for ${service} services near ${location}...`);
+  // Filter providers by service
+  const results = providersData.filter(p => p.service === service);
+
+  if(results.length === 0) {
+    providersDiv.innerHTML = "<p>No providers found for this service.</p>";
+    return;
+  }
+
+  // Display providers dynamically with details
+  results.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.innerHTML = `
+      <div class="service-info">
+        <h3>${p.name}</h3>
+        <p><strong>Rating:</strong> ${p.rating}⭐</p>
+        <p><strong>Distance:</strong> ${p.distance}</p>
+        <p><strong>Service:</strong> ${p.service}</p>
+        <p><strong>Phone:</strong> ${p.phone}</p>
+        <p><strong>Email:</strong> ${p.email}</p>
+        <p><strong>Experience:</strong> ${p.experience}</p>
+        <p><strong>Price Range:</strong> ${p.price}</p>
+        <p><strong>Skills:</strong> ${p.skills}</p>
+      </div>
+      <button onclick="scheduleService('${p.name}')">Schedule</button>
+    `;
+    providersDiv.appendChild(card);
+  });
 }
 
 function scheduleService(providerName) {
+  const date = prompt(`Enter date for ${providerName} (e.g. 2025-12-01):`);
+  const time = prompt(`Enter time for ${providerName} (e.g. 10:00 AM):`);
+  if(date && time) {
+    alert(`Service with ${providerName} scheduled on ${date} at ${time}.`);
+  } else {
+    alert("Please provide both date and time to schedule.");
+  }
+}
+</script>
+
+</body>
+</html>
